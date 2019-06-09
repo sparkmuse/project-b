@@ -1,4 +1,3 @@
 app:
-  coinbase:
-    client:
-      url: https://api.coinbase.com/v2/prices/spot?currency=USD
+  coinbase.client.url: https://api.coinbase.com/v2/prices/spot?currency=USD
+  schedule.fixed-rate-milli: 2000
