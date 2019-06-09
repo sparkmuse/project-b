@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -83,7 +82,7 @@ class PriceServiceTest {
 
             when(priceRepository.findByCreatedBetween(any(), any())).thenReturn(Collections.singletonList(expectedPrice));
 
-            List<Price> prices = priceService.getHistoricalPrices(LocalDate.now(), LocalDate.now());
+            List<Price> prices = priceService.getHistoricalPrices("2019-06-09", "2019-06-09");
 
             assertThat(prices).isNotEmpty();
             assertThat(prices).containsExactly(expectedPrice);
@@ -96,18 +95,15 @@ class PriceServiceTest {
             when(priceRepository.findByCreatedBetween(any(), any())).thenReturn(Collections.emptyList());
 
             assertThrows(PriceNotFoundException.class,
-                    () -> priceService.getHistoricalPrices(LocalDate.now(), LocalDate.now()));
+                    () -> priceService.getHistoricalPrices("2019-06-09", "2019-06-09"));
         }
 
         @Test
         @DisplayName("throws exception when endDate > startDate")
         void datesException() {
 
-            LocalDate startDate = LocalDate.parse("2019-06-08");
-            LocalDate endDate = LocalDate.parse("2019-06-09");
-
             assertThrows(InvalidDateRangeException.class,
-                    () -> priceService.getHistoricalPrices(endDate, startDate));
+                    () -> priceService.getHistoricalPrices("2019-06-09", "2019-06-08"));
         }
     }
 }

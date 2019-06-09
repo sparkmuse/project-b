@@ -1,0 +1,36 @@
+:toc: left
+
+= Project B =
+
+
+This is the documentation for the project.
+
+== Assignment Questions Answers
+* The check period has to be configurable
+
+* The service has a HTTP-API with the following endpoints
+
+* Please describe ina few sentences and/or with a diagram how you planned the project and architecture.
+
+== Technical
+
+=== Requirements
+The requirements for the project
+
+=== Installation
+
+How to install
+
+=== Running it
+how to run it.
+
+
+
+== Rest API documentation
+=== Latest price ===
+operation::latest-price[snippets='curl-request,http-request,request-parameters,response-body']
+
+=== Historical prices ===
+operation::historical-prices[snippets='curl-request,http-request,request-parameters,response-body']
+
+=== Common Errors ===

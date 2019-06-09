@@ -24,12 +24,15 @@ public class PriceService {
                 .orElseThrow(() -> new PriceNotFoundException("latest price not found in database"));
     }
 
-    public List<Price> getHistoricalPrices(LocalDate start, LocalDate end) {
+    public List<Price> getHistoricalPrices(String start, String end) {
 
-        LocalDateTime startOfDay = start.atTime(0, 0);
-        LocalDateTime endOfDay = end.atTime(23, 59);
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
 
-        if (end.isBefore(start)) {
+        LocalDateTime startOfDay = startDate.atTime(0, 0);
+        LocalDateTime endOfDay = endDate.atTime(23, 59);
+
+        if (endDate.isBefore(startDate)) {
             throw new InvalidDateRangeException("endDate " + end + " cannot be before startDate " + start);
         }
 
