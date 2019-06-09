@@ -2,7 +2,6 @@
 
 = Project B =
 
-
 This is the documentation for the project.
 
 == Assignment Questions Answers
@@ -12,7 +11,6 @@ The check period can be made configurable in src/main/resources/application.yml 
 ----
 app.schedule.fixed-rate-milli
 ----
-
 
 * The service has a HTTP-API with the following endpoints
 
@@ -24,6 +22,16 @@ The application consists of mainly two services: A scheduler and service to inte
 The scheduler's job is to call an external Api (coinbase) and retrieve the latest price and the save it into the database.
 The API service will be getting the information from the database and returning it to the user.
 The database selected is an in-memory Mongodb, we are using this format since there is no relationship between the data.
+
+
+IMPORTANT
+This project is not in any way finished. Here are some things I wish I had time to add:
+* Integration tests all test are unit based
+* And end to end test for the system to ensure all components talking to each other.
+* There is a constant "USD" that needs to be removed or acted on. A decision needs to be made. I left it there to avoid any unnecessary features, for now.
+* The Scheduler has no thread pull configuration. For the current specifications I think it's ok.
+* The configuration is right now in the application. So the app has to be restarted to update it. Maybe it could be good to move it to a cloud server.
+* We need a real database. The embeded mongo is just for prototyping.
 
 
 == Rest API documentation
