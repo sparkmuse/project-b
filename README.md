@@ -1,4 +1,4 @@
-**Project essen**
+**Project B**
 
 To build the application run:
 `mvn clean install`
