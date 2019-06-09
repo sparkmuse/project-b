@@ -1,0 +1,4 @@
+app:
+  coinbase:
+    client:
+      url: https://api.coinbase.com/v2/prices/spot?currency=USD
