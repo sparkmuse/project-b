@@ -21,25 +21,22 @@ public class PriceService {
 
         return priceRepository
                 .findTopByOrderByCreatedDesc()
-                .orElseThrow(() -> new PriceNotFoundException("latest price not found in database"));
+                .orElseThrow(() -> new PriceNotFoundException("Latest price not found in database"));
     }
 
     public List<Price> getHistoricalPrices(String start, String end) {
 
-        LocalDate startDate = LocalDate.parse(start);
-        LocalDate endDate = LocalDate.parse(end);
+        LocalDateTime startDay = LocalDate.parse(start).atTime(0,0);
+        LocalDateTime endDay = LocalDate.parse(end).atTime(23, 59);
 
-        LocalDateTime startOfDay = startDate.atTime(0, 0);
-        LocalDateTime endOfDay = endDate.atTime(23, 59);
-
-        if (endDate.isBefore(startDate)) {
-            throw new InvalidDateRangeException("endDate " + end + " cannot be before startDate " + start);
+        if (endDay.isBefore(startDay)) {
+            throw new InvalidDateRangeException("EndDate " + end + " cannot be before startDate " + start);
         }
 
-        List<Price> prices = priceRepository.findByCreatedBetween(startOfDay, endOfDay);
+        List<Price> prices = priceRepository.findByCreatedBetweenOrderByCreatedDesc(startDay, endDay);
 
         if (prices.isEmpty()) {
-            throw new PriceNotFoundException("latest price not found in database");
+            throw new PriceNotFoundException("Latest price not found in database");
         }
 
         return prices;

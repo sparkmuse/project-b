@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -80,7 +81,7 @@ class PriceServiceTest {
                     .symbol("USD")
                     .build();
 
-            when(priceRepository.findByCreatedBetween(any(), any())).thenReturn(Collections.singletonList(expectedPrice));
+            when(priceRepository.findByCreatedBetweenOrderByCreatedDesc(any(), any())).thenReturn(Collections.singletonList(expectedPrice));
 
             List<Price> prices = priceService.getHistoricalPrices("2019-06-09", "2019-06-09");
 
@@ -92,7 +93,7 @@ class PriceServiceTest {
         @DisplayName("throws exception when cannot find prices")
         void pricesNotFound() {
 
-            when(priceRepository.findByCreatedBetween(any(), any())).thenReturn(Collections.emptyList());
+            when(priceRepository.findByCreatedBetweenOrderByCreatedDesc(any(), any())).thenReturn(Collections.emptyList());
 
             assertThrows(PriceNotFoundException.class,
                     () -> priceService.getHistoricalPrices("2019-06-09", "2019-06-09"));
@@ -104,6 +105,14 @@ class PriceServiceTest {
 
             assertThrows(InvalidDateRangeException.class,
                     () -> priceService.getHistoricalPrices("2019-06-09", "2019-06-08"));
+        }
+
+        @Test
+        @DisplayName("throws exception when invalid dates")
+        void invalidDatesException() {
+
+            assertThrows(DateTimeParseException.class,
+                    () -> priceService.getHistoricalPrices("invalid-date", "invalid-date"));
         }
     }
 }

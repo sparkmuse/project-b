@@ -1,6 +1,8 @@
 package com.searchmetrics.coding.api;
 
 import com.searchmetrics.coding.entity.Price;
+import com.searchmetrics.coding.exception.InvalidDateRangeException;
+import com.searchmetrics.coding.exception.PriceNotFoundException;
 import com.searchmetrics.coding.service.PriceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -45,6 +48,7 @@ class PriceControllerTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext,
                RestDocumentationContextProvider restDocumentation) {
+
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()
@@ -79,7 +83,7 @@ class PriceControllerTest {
                         requestParameters(
                                 parameterWithName("latest").description("get the lates price from the database")
                         )
-                        ));
+                ));
     }
 
     @Test
@@ -106,6 +110,60 @@ class PriceControllerTest {
                 .andExpect(jsonPath("$[0].created").value(localDateTime.toString()))
                 .andExpect(jsonPath("$[0].rate").value(23.00d))
                 .andDo(document("historical-prices",
+                        requestParameters(
+                                parameterWithName("startDate").description("the start date to get prices"),
+                                parameterWithName("endDate").description("the end date to get prices")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("cannot parse dates returns DateTimeParseException")
+    void dateParse() throws Exception {
+
+        when(priceService.getHistoricalPrices(anyString(), anyString())).thenThrow(DateTimeParseException.class);
+
+        mockMvc.perform(get("/prices")
+                .param("startDate", "invalid-date")
+                .param("endDate", "invalid-date"))
+                .andExpect(status().isBadRequest())
+                .andDo(document("error-date-parse",
+                        requestParameters(
+                                parameterWithName("startDate").description("the start date to get prices"),
+                                parameterWithName("endDate").description("the end date to get prices")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("invalid date range returns InvalidDateRangeException")
+    void dateRange() throws Exception {
+
+        when(priceService.getHistoricalPrices(anyString(), anyString())).thenThrow(InvalidDateRangeException.class);
+
+        mockMvc.perform(get("/prices")
+                .param("startDate", "2019-06-10")
+                .param("endDate", "2019-06-09"))
+                .andExpect(status().isBadRequest())
+                .andDo(document("error-invalid-range",
+                        requestParameters(
+                                parameterWithName("startDate").description("the start date to get prices"),
+                                parameterWithName("endDate").description("the end date to get prices")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("price not found returns PriceNotFoundException")
+    void notFound() throws Exception {
+
+        when(priceService.getHistoricalPrices(anyString(), anyString())).thenThrow(PriceNotFoundException.class);
+
+        mockMvc.perform(get("/prices")
+                .param("startDate", "2019-06-09")
+                .param("endDate", "2019-06-09"))
+                .andExpect(status().isBadRequest())
+                .andDo(document("error-no-price",
                         requestParameters(
                                 parameterWithName("startDate").description("the start date to get prices"),
                                 parameterWithName("endDate").description("the end date to get prices")

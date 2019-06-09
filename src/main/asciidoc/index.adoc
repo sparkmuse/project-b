@@ -8,25 +8,26 @@ This is the documentation for the project.
 == Assignment Questions Answers
 * The check period has to be configurable
 
+The check period can be made configurable in src/main/resources/application.yml by changing the property name:
+----
+app.schedule.fixed-rate-milli
+----
+
+
 * The service has a HTTP-API with the following endpoints
+
+Refer to API documentation in the next section.
 
 * Please describe ina few sentences and/or with a diagram how you planned the project and architecture.
 
-== Technical
-
-=== Requirements
-The requirements for the project
-
-=== Installation
-
-How to install
-
-=== Running it
-how to run it.
-
+The application consists of mainly two services: A scheduler and service to interact with the api.
+The scheduler's job is to call an external Api (coinbase) and retrieve the latest price and the save it into the database.
+The API service will be getting the information from the database and returning it to the user.
+The database selected is an in-memory Mongodb, we are using this format since there is no relationship between the data.
 
 
 == Rest API documentation
+
 === Latest price ===
 operation::latest-price[snippets='curl-request,http-request,request-parameters,response-body']
 
@@ -34,3 +35,19 @@ operation::latest-price[snippets='curl-request,http-request,request-parameters,r
 operation::historical-prices[snippets='curl-request,http-request,request-parameters,response-body']
 
 === Common Errors ===
+Bellow there some of the most common errors encountered when using this API.
+
+==== Date Format ====
+All dates have to be formatted with ISO as "yyyy-MM-dd"
+
+operation::error-date-parse[snippets='curl-request,http-response']
+
+==== Date Range ====
+The end date hast to be always greater than the start date.
+
+operation::error-invalid-range[snippets='curl-request,http-response']
+
+==== No Price ====
+There is no price in the database to display at the moment.
+
+operation::error-no-price[snippets='curl-request,http-response']

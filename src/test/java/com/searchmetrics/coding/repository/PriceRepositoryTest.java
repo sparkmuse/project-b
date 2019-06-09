@@ -37,7 +37,7 @@ class PriceRepositoryTest {
         LocalDateTime start = LocalDateTime.parse("2019-06-01T00:00:00");
         LocalDateTime end = LocalDateTime.parse("2019-06-05T23:59:00");
 
-        List<Price> prices = priceRepository.findByCreatedBetween(start, end);
+        List<Price> prices = priceRepository.findByCreatedBetweenOrderByCreatedDesc(start, end);
 
         assertThat(prices.get(0)).isEqualToComparingFieldByField(price);
     }
