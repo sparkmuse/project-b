@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@DisplayName("returns optional")
+@DisplayName("CoinBaseClientTest returns optional")
 class CoinBaseClientTest {
 
     private static WireMockServer wireMockServer;
