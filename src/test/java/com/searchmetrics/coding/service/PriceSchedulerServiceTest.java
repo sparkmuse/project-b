@@ -69,4 +69,33 @@ class PriceSchedulerServiceTest {
 
         verifyZeroInteractions(priceRepository);
     }
+
+    @Test
+    @DisplayName("does not save the price to the database when null data")
+    void nullData() {
+
+        CoinBasePrice expected = new CoinBasePrice();
+        expected.setData(null);
+
+        when(coinBaseClient.getPrice()).thenReturn(Optional.of(expected));
+
+        priceSchedulerService.fetchPrice();
+
+        verifyZeroInteractions(priceRepository);
+    }
+
+    @Test
+    @DisplayName("does not save the price to the database when null data price")
+    void nullPrice() {
+
+        CoinBasePrice expected = new CoinBasePrice();
+        Data data = Data.builder().build();
+        expected.setData(data);
+
+        when(coinBaseClient.getPrice()).thenReturn(Optional.of(expected));
+
+        priceSchedulerService.fetchPrice();
+
+        verifyZeroInteractions(priceRepository);
+    }
 }
