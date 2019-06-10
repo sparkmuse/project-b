@@ -10,13 +10,6 @@ branches:
     - master
     - personal-after-test-work-do-not-use
 
-addons:
-  sonarcloud:
-    organization: sparkmuse-github
-    token:
-      secure: SI6s9lfEzfCzyJz7XrcbABxPmR9mXszbLPTPUomxdYhjEX8wiLDeW0J8DG8bv7q15yhZqyDNkG7m+/Z+bd9/GNbGXLPjglKn9GtwmI77pbvAiDTUl6kOttPCGzwf2veCWY78c+aF//h627Ii37h+s4+C47UWm35xr08WGm1n9MtGlbnNlQnHLDSazvgHtwvobzaEpD9O9u/vsXrXVvkMDhYIT83vC2wARTuN3YKBGQWbBEVlyANNr4PaEPQM8URp3leLywQ009pXLtpYl/dFsVzRL5vriS3Nl8Qvb+q/9lf+Y+6KfibX8CiIZZMAaBLTScYKO0FVgyayokWoogxQR9c8iX5U6T2vnwYP8dObkqknO/CJ4Ugq6QzjaoTzfuHOABbOeFo5Xb2OgUvdu7tSnxvW1akuslFnZhdnsdCG2VjAf6MMuSTNwnVq1l77XYnItaba598ASwdjNaCwAnMyZZA47lyvusuvJTVv+qIq/q0meZ9NcKOW71ClBOTdH2NOV1vMkPbrG0Dwz+tWUCvdtBQ1olzkArQm0tHHnAmCaO5F41AN9fNthJe8yPpcLCJ3eCc/3W2vOqBDqPGR8z5Gq95nIvP1vvduwBZxZjV3rHYRtkJd6pP/11in3R0cVB7e2XzQdI7VcAN7rGgZN3U2ylD75Zr7X1XEfQdILIix91o=
-
 cache:
   directories:
     - "$HOME/.m2/repository"
-    - "$HOME/.sonar/cache"
