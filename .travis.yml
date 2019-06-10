@@ -3,6 +3,9 @@ sudo: false
 install: true
 dist: trusty
 
+jdk:
+  - openjdk12
+
 branches:
   only:
     - master
