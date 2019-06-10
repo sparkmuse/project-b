@@ -1,0 +1,13 @@
+language: java
+sudo: false
+install: true
+dist: trusty
+
+branches:
+  only:
+    - master
+    - personal-after-test-work-do-not-use
+
+cache:
+  directories:
+    - "$HOME/.m2/repository"

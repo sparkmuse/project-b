@@ -2,6 +2,7 @@ package com.searchmetrics.coding.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.searchmetrics.coding.config.CoinBaseProperties;
+import com.searchmetrics.coding.config.RestTemplateConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -25,7 +27,11 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = {
+        RestTemplateConfig.class,
+        RestTemplateAutoConfiguration.class,
+        CoinBasePrice.class
+})
 @DisplayName("CoinBaseClientTest returns optional")
 class CoinBaseClientTest {
 
