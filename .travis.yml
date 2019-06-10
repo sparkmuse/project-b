@@ -2,7 +2,6 @@ language: java
 sudo: false
 install: true
 dist: trusty
-
 jdk:
   - openjdk12
 
@@ -10,6 +9,12 @@ branches:
   only:
     - master
     - personal-after-test-work-do-not-use
+
+addons:
+  sonarcloud:
+    organization: sparkmuse-github
+    token:
+      secure: e/ZUhkqMQLqWNzU56NWrHWn7xPgt4XM9HYb7faLd2lONsjisg94klGy0kJZCEec3f4hXHXctTe7w+9NuPWw6Mhc6pzZy/y4rw435ZxyUBUwhS/bPKSvT087vjLXnhu07gnogAxq1B6R/IggkhMgAobkTFWa7R98cgkDIWo+g4aufkrQyVCL/AdJIFImATwHtsarXvsuOwCZpqqOkZWM+y1tJu2yoQuhl2BzKIWDCQUEeZsBUuylbBUnmc1SLOE2iVdYv+qlIbxnut8nXR58dluQTCAoJqUdLZAqT0as1WgxRvoQIzZwatR0tjOo3+8bqNfEWEZSlW+Y3x0+lcg6yhKQxrCKZHtiPEw+A3Xzvx/ZFp8fh6RKgTNlzMfdBTOhCQtZmFbQ4sGW4DYw9zEQqI9ieVExXvIXzkavcdHtUjorbaXdSJpKCUcSzxSzRU54BybWm6mB8kx8Y7Mwc3+zbEsxhYuIDs78GW1HWZDWG4YIpHfSFXCmQEqj1KEq8rZh3DiCsTm2TxcOIe+vV2of1M1TIRl2GEHPqj+CPv463I6C5JmwSEUtKpTKFU4e+BzX7mot+H1tkuvbaUZZfT+hr+51+FRH5EsaH/2qn95+jDXhzyCunm8FaeevQdmiUn3bee5w9oZdXfxs2J3689re/ilgVXZARCx00degRBtWrkpg=
 
 cache:
   directories:
