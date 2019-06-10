@@ -50,7 +50,7 @@ class PriceServiceTest {
                     .symbol("USD")
                     .build();
 
-            when(priceRepository.findTopByOrderByCreatedDesc()).thenReturn(Optional.of(expected));
+            when(priceRepository.findLatest()).thenReturn(Optional.of(expected));
 
             Price lastPrice = priceService.getLastPrice();
 
@@ -61,7 +61,7 @@ class PriceServiceTest {
         @DisplayName("throws exception when cannot find price")
         void priceNotFound() {
 
-            when(priceRepository.findTopByOrderByCreatedDesc()).thenReturn(Optional.empty());
+            when(priceRepository.findLatest()).thenReturn(Optional.empty());
 
             assertThrows(PriceNotFoundException.class, () -> priceService.getLastPrice());
         }
@@ -81,7 +81,7 @@ class PriceServiceTest {
                     .symbol("USD")
                     .build();
 
-            when(priceRepository.findByCreatedBetweenOrderByCreatedDesc(any(), any())).thenReturn(Collections.singletonList(expectedPrice));
+            when(priceRepository.priceInBetween(any(), any())).thenReturn(Collections.singletonList(expectedPrice));
 
             List<Price> prices = priceService.getHistoricalPrices("2019-06-09", "2019-06-09");
 
@@ -93,7 +93,7 @@ class PriceServiceTest {
         @DisplayName("throws exception when cannot find prices")
         void pricesNotFound() {
 
-            when(priceRepository.findByCreatedBetweenOrderByCreatedDesc(any(), any())).thenReturn(Collections.emptyList());
+            when(priceRepository.priceInBetween(any(), any())).thenReturn(Collections.emptyList());
 
             assertThrows(PriceNotFoundException.class,
                     () -> priceService.getHistoricalPrices("2019-06-09", "2019-06-09"));

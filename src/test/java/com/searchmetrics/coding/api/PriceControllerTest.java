@@ -36,14 +36,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
-@WebMvcTest
+@WebMvcTest(controllers = {PriceController.class, PriceControllerAdvice.class})
 class PriceControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    PriceService priceService;
+    private PriceService priceService;
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext,

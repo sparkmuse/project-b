@@ -23,7 +23,7 @@ class PriceRepositoryTest {
     PriceRepository priceRepository;
 
     @Test
-    @DisplayName("can find prices between start and end date")
+    @DisplayName("returns prices between start and end date")
     void datesInBetween() {
 
         Price price = Price.builder()
@@ -37,13 +37,13 @@ class PriceRepositoryTest {
         LocalDateTime start = LocalDateTime.parse("2019-06-01T00:00:00");
         LocalDateTime end = LocalDateTime.parse("2019-06-05T23:59:00");
 
-        List<Price> prices = priceRepository.findByCreatedBetweenOrderByCreatedDesc(start, end);
+        List<Price> prices = priceRepository.priceInBetween(start, end);
 
         assertThat(prices.get(0)).isEqualToComparingFieldByField(price);
     }
 
     @Test
-    @DisplayName("can find latest price")
+    @DisplayName("returns latest price")
     void latest() {
 
         Price price = Price.builder()
@@ -60,8 +60,19 @@ class PriceRepositoryTest {
         priceRepository.save(price);
         priceRepository.save(latestPrice);
 
-        Optional<Price> actual = priceRepository.findTopByOrderByCreatedDesc();
+        Optional<Price> actual = priceRepository.findLatest();
 
         assertThat(actual.get()).isEqualToComparingFieldByField(latestPrice);
+    }
+
+    @Test
+    @DisplayName("returns optional empty when cannot find price")
+    void latestEmpty() {
+
+        priceRepository.deleteAll();
+
+        Optional<Price> actual = priceRepository.findLatest();
+
+        assertThat(actual).isEmpty();
     }
 }

@@ -20,7 +20,7 @@ public class PriceService {
     public Price getLastPrice() {
 
         return priceRepository
-                .findTopByOrderByCreatedDesc()
+                .findLatest()
                 .orElseThrow(() -> new PriceNotFoundException("Latest price not found in database"));
     }
 
@@ -33,7 +33,7 @@ public class PriceService {
             throw new InvalidDateRangeException("EndDate " + end + " cannot be before startDate " + start);
         }
 
-        List<Price> prices = priceRepository.findByCreatedBetweenOrderByCreatedDesc(startDay, endDay);
+        List<Price> prices = priceRepository.priceInBetween(startDay, endDay);
 
         if (prices.isEmpty()) {
             throw new PriceNotFoundException("Latest price not found in database");
