@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>12</java.version>
-        <wiremock-jre8.version>2.23.2</wiremock-jre8.version>
+        <wiremock-jre8.version>2.35.1</wiremock-jre8.version>
     </properties>
 
     <dependencies>
